@@ -3,6 +3,7 @@ import time
 import datetime
 import platform
 
+
 utilisation = psutil.cpu_percent(interval=1)
 coeurs_logiques = psutil.cpu_count()
 
@@ -13,23 +14,31 @@ if frequence_cpu is not None:
 else:
     frequence = None
 
-def affichage_informations():
-    print(f"Utilisation du processeur : {utilisation} %")
-    print(f"Nombre de cœurs logiques : {coeurs_logiques}")
-
-    if frequence is not None:
-        print(f"Fréquence du processeur : {frequence} MHz")
-    else:
-        print("Fréquence du processeur : Non disponible")
-
 while True:
+    print(f"L'utilisation du processeur est de {utilisation} %")
     utilisation = psutil.cpu_percent(interval=1)
 
-    print(f"L'utilisation du processeur est de {utilisation} %")
+    if utilisation >= 0 and utilisation <= 69:
+        print("Normal")
+    elif utilisation > 69 and utilisation <= 89:
+        print("Attention")
+    elif utilisation > 89:
+        print("Critique")
 
-    if utilisation <= 69:
-        print("NORMAL")
-    elif utilisation <= 89:
-        print("ATTENTION")
-    else:
-        print("CRITIQUE")
+
+def affichage_informations():
+    print(f"Utilisation du processeur : {utilisation}")
+    print(f"Nombre de coeurs logiques : {coeurs_logiques}")
+    print(f"Frequence du processeur : {frequence}")
+
+
+def sauvegarde():
+    moment_actuel = datetime.datetime.now()
+    date_formatee = moment_actuel.strftime("%d/%m/%Y")
+    print(date_formatee)
+
+    informations = [utilisation, coeurs_logiques, frequence, date_formatee]
+
+    with open("historique_cpu.txt", "a") as file1:
+        for info in informations:
+            file1.write(f"{str(info)}\n")
