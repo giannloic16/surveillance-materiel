@@ -41,8 +41,6 @@ def affichage_informations_ram(informations_ram):
 
 while True:
 
-    print("\n===== SURVEILLANCE DU PROCESSEUR =====")
-
     utilisation = psutil.cpu_percent(interval=1)
 
     print(f"L'utilisation du processeur est de {utilisation} %")
@@ -56,8 +54,6 @@ while True:
 
     affichage_informations()
 
-
-    print("\n===== SURVEILLANCE DE LA RAM =====")
 
     informations_ram = psutil.virtual_memory()
 
