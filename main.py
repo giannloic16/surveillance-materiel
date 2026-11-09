@@ -35,6 +35,7 @@ def sauvegarde():
         for info in informations:
             file1.write(f"{str(info)}\n")
 
+
 # Affichage des informations  sur la memoire vive (RAM)
 def affichage_informations_ram(informations_ram):
     print(f" memoire totale: {informations_ram.total}")
@@ -70,7 +71,7 @@ def sauvegarde_disque(disk_memory, etat):
             file1.write(str(info) + " ")
         file1.write("\n")
 
-# Actualisation des données à chaque tour 
+# Actualisation des données à chaque 5 secondes
 while True:
 
     print(f"L'utilisation du processeur est de {utilisation} %")
