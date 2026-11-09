@@ -1,3 +1,4 @@
+# Importation des modules
 import psutil
 import time
 import datetime
@@ -14,12 +15,14 @@ if frequence_cpu is not None:
 else:
     frequence = None
 
+# Fonction d'affichage des informations du CPU
 
 def affichage_informations():
     print(f"Utilisation du processeur : {utilisation}")
     print(f"Nombre de coeurs logiques : {coeurs_logiques}")
     print(f"Frequence du processeur : {frequence}")
 
+# Sauvegarde des informations du CPU dans un fichier texte 
 
 def sauvegarde():
     moment_actuel = datetime.datetime.now()
@@ -32,7 +35,7 @@ def sauvegarde():
         for info in informations:
             file1.write(f"{str(info)}\n")
 
-
+# Affichage des informations  sur la memoire vive (RAM)
 def affichage_informations_ram(informations_ram):
     print(f" memoire totale: {informations_ram.total}")
     print(f"Mémoire totale : {informations_ram.total}")
@@ -47,14 +50,14 @@ def affichage_informations_ram(informations_ram):
     print(f"Mémoire partagée : {informations_ram.shared}")
     print(f"Mémoire slab : {informations_ram.slab}")
 
-
+# Affichage des informations du disque du dur
 def affichage_disque(disk_memory):
     print(f" La capacite totale du disque est de : {disk_memory.total}")
     print(f" La capacite occupée du disque est de : {disk_memory.used}")
     print(f" La capacite libre du disque est de: {disk_memory.free}")
     print(f" Pourcentage utilisé du disque est de: {disk_memory.percent}")
 
-
+# Sauvegarde des informations du disque dur dans un fichier texte
 def sauvegarde_disque(disk_memory, etat):
     moment_actuel = datetime.datetime.now()
     date_formatee = moment_actuel.strftime("%d/%m/%Y %H:%M:%S")
@@ -67,12 +70,13 @@ def sauvegarde_disque(disk_memory, etat):
             file1.write(str(info) + " ")
         file1.write("\n")
 
-
+# Actualisation des données à chaque tour 
 while True:
 
     print(f"L'utilisation du processeur est de {utilisation} %")
     utilisation = psutil.cpu_percent(interval=1)
 
+    # Conditions d'affichage CPU
     if utilisation >= 0 and utilisation <= 69:
         print("Normal")
     elif utilisation > 69 and utilisation <= 89:
@@ -86,6 +90,7 @@ while True:
 
     informations_ram = psutil.virtual_memory()
 
+    # Conditions d'affichage RAM
     if informations_ram.percent <= 70:
         etat = "normal"
         print(etat)
@@ -101,6 +106,7 @@ while True:
 
     disk_memory = psutil.disk_usage("/")
 
+    # Conditions d'affichage disque_dur
     if disk_memory.percent <= 70:
         etat = "normal"
         print(etat)
@@ -111,6 +117,7 @@ while True:
         etat = "critique"
         print(etat)
 
+    # Appel des fonctions
     affichage_disque(disk_memory)
     sauvegarde_disque(disk_memory, etat)
 
